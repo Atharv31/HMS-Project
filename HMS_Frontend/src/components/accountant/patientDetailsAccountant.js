@@ -127,7 +127,7 @@ function PatientDetailsAccountant(props) {
             Update Status
           </Button>
         </div>
-        <div className="p-2 bd-highlight" style={{ marginLeft: '-10%' }} >
+        <div className="p-2 bd-highlight"  >
           <Button
             variant="secondary"
             onClick={() => {
@@ -153,7 +153,7 @@ function PatientDetailsAccountant(props) {
 
       <table
         className="patientDetailsAccountantTable table table-hover"
-        style={{ marginLeft: '50%' }}
+        
       >
         <tbody>
           <tr>
@@ -186,7 +186,7 @@ function PatientDetailsAccountant(props) {
       </table>
       <table
         className="chargesTable table table-hover "
-        style={{ marginLeft: '50%' }}
+        
       >
         <tr>
           <th>Sr.no</th>
@@ -217,20 +217,20 @@ function PatientDetailsAccountant(props) {
       </table>
       <table
         className="chargesTable table table-hover"
-        style={{ marginLeft: '50%' }}
+       
       >
         <tr>
-          <th>Total Bill :</th>
-          <th >
+          <th>Total Bill </th>
+          <td >
             Rs.
             {patientCharges.wardCharges +
               patientCharges.medicineCharges +
               patientCharges.doctorCharges}
-          </th>
+          </td>
         </tr>
         <tr>
           <th>Payment Status</th>
-          <th>{patientDetails.paymentStatus}</th>
+          <td>{patientDetails.paymentStatus}</td>
         </tr>
       </table>
 

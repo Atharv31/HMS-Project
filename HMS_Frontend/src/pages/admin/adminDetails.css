@@ -74,13 +74,6 @@ span {
     border: 2px solid #ddd;
 }
 
-.table-heading {
-    background-color: #3498db;
-    color: white;
-    font-weight: bold;
-    border: 1px solid #ddd;
-    /* Match the table border */
-}
 .table-heading th{
     font-weight: bold;
     border: 1px solid #ddd; 

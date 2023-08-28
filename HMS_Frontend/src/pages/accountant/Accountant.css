@@ -22,7 +22,12 @@
     font-weight: bold;
     font-size: large;
     height: 40px;
-    border: 2px solid #ddd;
+    border: 1px solid #ddd;
+    background-color: #3498db;
+    color: white;
+}
+.patient-table th{
+  border: 1px solid black;
 }
 .patient-row {
     background-color: #f8f8f8;
@@ -56,14 +61,6 @@
     background-color: #2980b9;
   }
   
-.table-heading {
-    background-color: #3498db;
-    color: white;
-    font-weight: bold;
-
-    border: 1px solid #ddd;
-    /* Match the table border */
-}
 .patient-table{
     border-collapse: collapse;
     border: 1px solid #ddd;
@@ -77,6 +74,7 @@
     border-style: solid;
     border-color: black;
     margin-left: 50%;
+    /* transition: background-color 0.2s; */
 }
 tr,td,th{
     border-style: solid;
