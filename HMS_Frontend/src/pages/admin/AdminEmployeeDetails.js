@@ -333,7 +333,7 @@ const Admin = () => {
         <table className="employee-table">
           <thead >
             <tr className="table-heading" >
-              <th >EmpId</th>
+              <th >Sr.No.</th>
               <th>Name</th>
               <th>Phone No</th>
               <th>Role</th>
