@@ -16,32 +16,32 @@ const RemoveEmployeeModal = (props) => {
   const [empId, setEmpId] = useState(0)
   const navigate = useNavigate();
 
-  const RemoveEmployee = () => {
-    if (empId != 0) {
-      const url = `${URL}/employee/deleteEmployee`;
-      const body = {
-        empId,
-        cellNo
-      };
+  // const RemoveEmployee = () => {
+  //   if (empId != 0) {
+  //     const url = `${URL}/employee/deleteEmployee`;
+  //     const body = {
+  //       empId,
+  //       cellNo
+  //     };
 
-      setDataChangedFlag(true)
-      axios.post(url, body).then((res) => {
-        const result = res.data;
-        if (result.status == "success" && result.data == "deleted_success") {
-          toast.success("remove success")
-        } else {
-          toast.warning("employee not removed")
-        }
-      }).catch(err => {
-        navigate("/error");
-      });
-      setRemoveEmployee(false)
-      setRShow(false)
-      RhandleClose();
-    }
+  //     setDataChangedFlag(true)
+  //     axios.post(url, body).then((res) => {
+  //       const result = res.data;
+  //       if (result.status == "success" && result.data == "deleted_success") {
+  //         toast.success("remove success")
+  //       } else {
+  //         toast.warning("employee not removed")
+  //       }
+  //     }).catch(err => {
+  //       navigate("/error");
+  //     });
+    //   setRemoveEmployee(false)
+    //   setRShow(false)
+    //   RhandleClose();
+    // }
 
 
-  }
+  // }
   /**==================================================================== */
   return (
     <div >
@@ -82,7 +82,7 @@ const RemoveEmployeeModal = (props) => {
             </Button>
           </div>
 
-          <Button size="sm" variant="success" onClick={RemoveEmployee} >
+          <Button size="sm" variant="success" >
             Remove Employee
           </Button>
         </Modal.Footer>

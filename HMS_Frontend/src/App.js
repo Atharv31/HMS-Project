@@ -6,8 +6,10 @@ import "./App.css";
 
 import Home from "./pages/Home/Home"
 import SignIn from "./pages/signIn/signIn"
+import ResetPassword from "./pages/signIn/resetPassword"
 import Admin from "./pages/admin/AdminEmployeeDetails";
 import Header from "./components/header/Header"
+import PatientDetails from "./pages/patient/patientDetails"
 function App() {
     return (
         <div className="appJS">
@@ -17,6 +19,9 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/signIn" element={<SignIn />} />
                     <Route path="/admin" element={<Admin />} />
+                    <Route path="/resetPassword" element={<ResetPassword />} />
+                    <Route path="/patientDetails" element={<PatientDetails />} />
+
                 </Routes>
                 <ToastContainer theme="colored" />
             </BrowserRouter>

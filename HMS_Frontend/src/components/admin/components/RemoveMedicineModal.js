@@ -29,7 +29,7 @@ const RemoveMedicineModal = (props) => {
   const GetAllMedicinesFromServer = () => {
     setDataChangeFlagRemoveMedicine(false)
     const url = `${URL}/medicine/getAllMedicines`;
-    axios.get(url).then((res) => {
+    axios.delete(url).then((res) => {
       const result = res.data;
       if (result.status == "success") {
         setMedicines(result.data);

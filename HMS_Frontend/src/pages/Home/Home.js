@@ -40,8 +40,7 @@ export default function Home() {
       <Container>
         <div className="container-text">
           <p className="px-5">
-
-            A Hospital Management System (HMS), also known as Hospital Information System (HIS) or Healthcare Information Management System (HIMS), is a comprehensive software solution designed to manage various aspects of a healthcare facility's operations, from patient registration and billing to medical records and inventory management.
+              A Hospital Management System (HMS), also known as Hospital Information System (HIS) or Healthcare Information Management System (HIMS), is a comprehensive software solution designed to manage various aspects of a healthcare facility's operations, from patient registration and billing to medical records and inventory management.
           </p>
         </div>
       </Container>
@@ -50,7 +49,7 @@ export default function Home() {
           <div className="col-lg-4">
             <div className="service-item">
               <h2>About Us</h2>
-              <p><p>The SUNBEAM hospital is a specialized healthcare institution or facility where medical professionals provide comprehensive medical treatment, care, and services to individuals suffering from illnesses, injuries, or various health conditions. Hospitals play a crucial role in the healthcare system by offering a wide range of medical services, from emergency care and surgery to diagnostics, long-term care, and rehabilitation.</p></p>
+              <p>The SUNBEAM hospital is a specialized healthcare institution or facility where medical professionals provide comprehensive medical treatment, care, and services to individuals suffering from illnesses, injuries, or various health conditions. Hospitals play a crucial role in the healthcare system by offering a wide range of medical services, from emergency care and surgery to diagnostics, long-term care, and rehabilitation.</p>
             </div>
           </div>
           <div className="col-lg-4">

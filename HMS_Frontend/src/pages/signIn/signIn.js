@@ -34,6 +34,7 @@ const SignIn = () => {
       .then((res) => {
         const result = res.data;
         if (result.status === "success") {
+          console.log(result.data)
           setWards(result.data);
         }
       })
@@ -189,7 +190,6 @@ const SignIn = () => {
               <Button
                 variant="success"
                 size="lg"
-                block
                 onClick={() => getUserFromServer()}
               >
                 Log In
@@ -203,9 +203,9 @@ const SignIn = () => {
         </Col>
       </Row>
     </Container>
-    <div className="table-container centered-table">
+    <div className="table-container">
       <table className="table table-hover"
-     style={{ float: "", margin: "20px", border: "solid", width: "100px" }}>
+     style={{ float: "", border: "solid", width: "100px" }}>
      <thead >
        <tr>
          <th>Ward type</th>
@@ -215,7 +215,7 @@ const SignIn = () => {
      </thead>
      <tbody className="tableBody">
        {wards.map((ward) => {
-         return <WardTableSignIn ward={ward} />;
+         return <WardTableSignIn key={ward.wardId} ward={ward} />;
        })}
      </tbody>
    </table>

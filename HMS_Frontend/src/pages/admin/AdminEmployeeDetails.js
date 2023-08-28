@@ -9,7 +9,7 @@ import {
 import Employee from "../../components/admin/employee";
 import "./adminDetails.css";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { URL } from "../../config";
 import axios from "axios";
@@ -25,11 +25,10 @@ import RemoveMedicineModal from "../../components/admin/components/RemoveMedicin
 //to set default header to axios
 
 const Admin = () => {
- 
+  let serialNo = 1;
   //********************to check if data is changed========== */
   const [dataChangedFlag, setDataChangedFlag] = useState(false);
   const [employeeUpdate, setEmployeeUpdate] = useState("");
-  const [index, setIndex] = useState(0);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -58,7 +57,7 @@ const Admin = () => {
   const [removeMedicineModalFlag, setRemoveMedicineModalFlag] = useState(false);
 
   //set token from session storage
-  const [token, setToken] = useState(sessionStorage.getItem("token_admin"));
+  const [token] = useState(sessionStorage.getItem("token_admin"));
   //to set default header in axios
   if (token != null)
     axios.defaults.headers.common["Authorization"] = "Bearer " + token;
@@ -68,9 +67,9 @@ const Admin = () => {
   const updateEmployee = (id, employee) => {
     console.log(
       "inside before updateEmployee :" +
-        Ushow +
-        "updateModalFlag:" +
-        updateModalFlag
+      Ushow +
+      "updateModalFlag:" +
+      updateModalFlag
     );
     setEmployeeUpdate(employee);
     console.log("recived name to update :" + employeeUpdate.firstName);
@@ -80,16 +79,8 @@ const Admin = () => {
     setUShow(true);
     setUpdateModalFlag(true);
   };
-  useEffect(() => {
-    getEmployeesFromServer();
-    console.log("inside useEffect of adminDetails");
-  }, [dataChangedFlag]);
-  // to set header in axios
-  let header = {
-    headers: {
-      Authorization: "Bearer " + token, //the token is a variable which holds the token
-    },
-  };
+
+
   /********===============================getting employees from server======================= */
 
   const getEmployeesFromServer = () => {
@@ -100,22 +91,24 @@ const Admin = () => {
       setDataChangedFlag(false);
       console.log("data flag inside getEmployeesFromServer " + dataChangedFlag);
       const result = res.data;
-     
-      
-
       if (result.status == "success") {
         setEmployees(result.data);
         console.log(res);
       } else {
         console.log("unable to fetch result");
       }
-    }).catch(err=>{
-      
-      
+    }).catch(err => {
+      console.log("In getEmployeesFromServer "+err)
       navigate("/error");
- });
+    });
   };
-  
+
+
+  useEffect(() => {
+    getEmployeesFromServer();
+    console.log("inside useEffect of adminDetails");
+  }, [dataChangedFlag]);
+
   return (
     <div >
       <Navbar expand="lg" sticky="top" className="custom-navbar" >
@@ -130,52 +123,30 @@ const Admin = () => {
             }}
           >
             Click For Options
-            
+
           </Navbar.Toggle>
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
+            <Nav className="me-auto" style={{ marginLeft: '5%' }}>
               {/* ==============================add new employee==================== */}
-              <DropdownButton
-             
+              <Button
                 size="sm"
-                title="Employee"
-                variant="warning"
-                style={{ margin: "6px"}}
+                variant="success"
+                style={{ width: '200%', height: '50%' }}
+                onClick={() => {
+                  handleShow();
+                  setEmployeeModal(true);
+                }}
               >
-                <Dropdown.Item>
-                  <Button
-                    size="sm"
-                    variant="success"
-                    onClick={() => {
-                      handleShow();
-                      setEmployeeModal(true);
-                    }}
-                    >
-                    Add New Employee
-                  </Button>
-                </Dropdown.Item>
-                <Dropdown.Item>
-                  <Button
-                    size="sm"
-                    variant="danger"
-                    onClick={() => {
-                      RhandleShow();
-
-                      setRemoveEmployee(true);
-                    }}
-                    >
-                    Remove Employee
-                  </Button>
-                </Dropdown.Item>
-              </DropdownButton>
+                Add New Employee
+              </Button>
 
               {/* ==========================add ward========================= */}
               <DropdownButton
                 size="sm"
                 title="Ward"
                 variant="warning"
-                style={{ margin: "6px" }}
-                >
+                style={{ margin: "10px" }}
+              >
                 <Dropdown.Item>
                   <Button
                     variant="success"
@@ -184,7 +155,7 @@ const Admin = () => {
                       handleShow();
                       setAddWardModalFlag(true);
                     }}
-                    >
+                  >
                     {" "}
                     Add ward
                   </Button>
@@ -197,7 +168,7 @@ const Admin = () => {
                       handleShow();
                       setRemoveWardModalFlag(true);
                     }}
-                    >
+                  >
                     {" "}
                     remove ward
                   </Button>
@@ -209,8 +180,8 @@ const Admin = () => {
                 size="sm"
                 title="Medicine"
                 variant="warning"
-                style={{ margin: "6px" }}
-                >
+                style={{ margin: "10px" }}
+              >
                 <Dropdown.Item>
                   <Button
                     variant="success"
@@ -232,7 +203,7 @@ const Admin = () => {
                       handleShow();
                       setRemoveMedicineModalFlag(true);
                     }}
-                    >
+                  >
                     {" "}
                     remove Medicine
                   </Button>
@@ -240,7 +211,7 @@ const Admin = () => {
               </DropdownButton>
 
               {/* ================================search employee===================== */}
-              <Nav.Link style={{marginLeft:'100%'}}>
+              <Nav.Link style={{ marginLeft: '100%' }}>
                 {/* third button */}
                 <div style={{ float: "right" }}>
                   <input
@@ -251,21 +222,21 @@ const Admin = () => {
                       textAlign: 'center'
                     }}
                     placeholder="  Search by Name .."
-                    onChange={(e) => {
-                      setSearch(e.target.value);
+                    onChange={(emp) => {
+                      setSearch(emp.target.value);
                     }}
                     type="text"
-                    />
+                  />
                 </div>
               </Nav.Link>
               <Nav.Link >
                 {/* fourth menu operration */}
-                
+
                 <Button
-                 variant="danger" 
-                 size="sm"
-                 onClick={() => {
-                   navigate("/signIn");
+                  variant="danger"
+                  size="sm"
+                  onClick={() => {
+                    navigate("/signIn");
                   }}
                 >
                   LogOut
@@ -279,9 +250,9 @@ const Admin = () => {
         {/*---------------------------- all untoggled modals------------------ */}
         {updateModalFlag && (
           <UpdateEmployeeModal
-          setUpdateModalFlag={setUpdateModalFlag}
-          dataChangedFlag={dataChangedFlag}
-          setDataChangedFlag={setDataChangedFlag}
+            setUpdateModalFlag={setUpdateModalFlag}
+            dataChangedFlag={dataChangedFlag}
+            setDataChangedFlag={setDataChangedFlag}
             employeeUpdate={employeeUpdate}
             EmpId={empId}
             show={Ushow}
@@ -359,10 +330,10 @@ const Admin = () => {
         )}
       </div>
       <div className="employee-container">
-        <table striped bordered hover className="employee-table">
-          <thead>
-            <tr className="table-heading">
-              <th>EmpId</th>
+        <table className="employee-table">
+          <thead >
+            <tr className="table-heading" >
+              <th >EmpId</th>
               <th>Name</th>
               <th>Phone No</th>
               <th>Role</th>
@@ -370,33 +341,38 @@ const Admin = () => {
               <th>Join Date</th>
               <th>Salary</th>
               <th>Update Detail</th>
+              <th>Remove Emp</th>
             </tr>
           </thead>
-          
+
           <tbody>
-            {employees
-              .filter((e) => {
-                if (search == "") return e;
-                else if (
-                  ((`${e.firstName}+" "+${e.lastName}`).toLocaleLowerCase()).toLocaleLowerCase().includes(
-                    search.toLocaleLowerCase()
+            {
+              employees
+                .filter((emp) => {
+                  if (search == "") return emp;
+                  else if (
+                    ((`${emp.firstName}+" "+${emp.lastName}`).toLocaleLowerCase()).includes(
+                      search.toLocaleLowerCase()
+                    )
                   )
-                )
-                  return e;
-              })
-              .map((e) => {
-                return (
-                  <Employee
-                    employee={e}
-                    updateEmployee={updateEmployee}
-                    index={index}
-                  />
-                );
-              })}
+                    return emp;
+                }).map((emp) => {
+                  return (
+
+                    <Employee
+                      key={emp.empId}
+                      serialNo={serialNo++}
+                      employee={emp}
+                      updateEmployee={updateEmployee}
+                      setDataChangedFlag={setDataChangedFlag}
+                    />
+                  );
+                })}
           </tbody>
         </table>
       </div>
     </div>
   );
 };
+
 export default Admin;

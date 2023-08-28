@@ -93,20 +93,21 @@ const checkSecurityAnswerOnServer=()=>{
   });
   };
 
-  return (
-    <div>
-      <Row>
-        <Col></Col>
-        <Col>
+  return (<>
+    <br/>
+    <Container className="signInContainer">
+      <Row className="justify-content-center">
+        {/* <Col></Col> */}
+        <Col xs={12} md={6} lg={9}>
           {/* ===============================email===================================== */}
-          <hr />
-          <div style={{ border: "solid", borderRadius: "10px" }}>
-            <div className="form-group needs-validation">
+          <br/>
+          {/* <div style={{ border: "solid", borderRadius: "10px" }}> */}
+            <div className="signInForm">
               <label className="form-label">
                 <h4>Email</h4>
               </label>
               <input
-                style={{ margin: "auto" }}
+                style={{ margin: "auto" , width:"auto"}}
                 onFocus={CheckForEmailDupicacyOnServer}
                 onBlur={CheckForEmailDupicacyOnServer}
                 onChange={(e) => {
@@ -207,13 +208,14 @@ const checkSecurityAnswerOnServer=()=>{
                 <Link to="/signIn">SignIn </Link>
               </div>
             </div>
-          </div>
+          {/* </div> */}
         </Col>
-        <Col></Col>
+        {/* <Col></Col> */}
       </Row>
 
      
-    </div>
+    </Container>
+    </>
   );
 };
 export default ResetPassword;

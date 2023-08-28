@@ -78,11 +78,13 @@ span {
     background-color: #3498db;
     color: white;
     font-weight: bold;
-
     border: 1px solid #ddd;
     /* Match the table border */
 }
-
+.table-heading th{
+    font-weight: bold;
+    border: 1px solid #ddd; 
+}
 .employee-row {
     background-color: #f8f8f8;
     transition: background-color 0.2s;
