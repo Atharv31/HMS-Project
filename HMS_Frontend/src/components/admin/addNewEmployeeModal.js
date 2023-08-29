@@ -226,7 +226,7 @@ const AddNewEmployeeModal = (props) => {
               <div></div>
             )}
           </div>
-          {role == "select role" ? (
+          {role === "select role" ? (
             <h6 className="emptyFieldWarning">*role cannot be empty</h6>
           ) : (
             <div></div>
@@ -292,7 +292,7 @@ const AddNewEmployeeModal = (props) => {
                 type="number"
                 className="form-control"
               />
-              {doctorCharges == 0 ? (
+              {doctorCharges === 0 ? (
                 <h6 className="emptyFieldWarning">*charges cannot be 0</h6>
               ) : (
                 <div></div>
@@ -364,7 +364,7 @@ const AddNewEmployeeModal = (props) => {
               className="form-control"
             />
             {/* salary validation */}
-            {salary == 0 ? (
+            {salary === 0 ? (
               <h6 className="emptyFieldWarning">*salary cannot be empty </h6>
             ) : (
               <div></div>
@@ -389,7 +389,7 @@ const AddNewEmployeeModal = (props) => {
               </Dropdown.Item>
             </DropdownButton>
             {/* security question validation */}
-            {securityQuestion == "select security question" ? (
+            {securityQuestion === "select security question" ? (
               <h6 className="emptyFieldWarning">
                 * security question cannot be empty
               </h6>
@@ -408,7 +408,7 @@ const AddNewEmployeeModal = (props) => {
               className="form-control"
               placeholder="xyz"
             />
-            {securityAnswer == "" ? (
+            {securityAnswer === "" ? (
               <h6 className="emptyFieldWarning">*answer cannot be empty</h6>
             ) : (
               <div></div>

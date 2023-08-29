@@ -51,7 +51,7 @@ function PatientDetailsAccountant(props) {
     axios.post(url, body).then((res) => {
       const result = res.data;
       console.log(result.data)
-      if (result.status == "success") {
+      if (result.status === "success") {
         console.log(res);
       } else {
         console.log("unable to fetch result");
@@ -66,7 +66,7 @@ function PatientDetailsAccountant(props) {
     axios.get(url).then((res) => {
       setDataChangedFlag(false);
       const result = res.data;
-      if (result.status == "success") {
+      if (result.status === "success") {
         setPaymentStatus(result.data.paymentStatus)
         setPatientCharges(result.data);
         console.log(res);

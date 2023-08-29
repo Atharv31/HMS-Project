@@ -1,25 +1,43 @@
+import {
+  Container,
+  Button,
+  Navbar,
+  Nav,
+} 
+from "react-bootstrap";
+
+import "./receptionist.css";
+import { useEffect, useState } from "react";
+import AddNewPatientModal from "../../components/receptionist/AddNewPatient";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import Patient from "../../components/receptionist/patient";
+import { URL } from "../../config";
 import { useNavigate } from "react-router";
 
-import { Button, Container, Nav, Navbar } from "react-bootstrap";
-import { URL } from "../../config";
-import "./Accountant.css";
-
-import PatientAccountant from "../../components/accountant/patientAccountant";
-
-const Accountant = () => {
-let serialNo=1
+const ReceptionistHome = () => {
   // ============================all constants=======================
+  const [addNewPatientModalFlag, setAddNewPatientModalFlag] = useState(false);
   const [show, setShow] = useState(false);
   const [patients, setPatients] = useState([]);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const [dataChangedFlag, setDataChangedFlag] = useState(false);
   const [search,setSearch]=useState("")
-  //set token from session storage
-  const [token, setToken] = useState(sessionStorage.getItem("token_accountant"));
-  axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+   
+   //set token from session storage
+   const [token, setToken] = useState(sessionStorage.getItem("token_reception"));
+   //to set defaults of axios header
+   axios.defaults.headers.common["Authorization"] = "Bearer " + token;
   //************************=======fuctions=========--------------- */
 
+  const ToggleAddNewPatientModal = () => {
+    setAddNewPatientModalFlag(true);
+    handleShow();
+    console.log(
+      "value of ToggleAddNewPatientModal in function : " +
+        addNewPatientModalFlag
+    );
+  };
   const getPatientsFromServer = () => {
     const url = `${URL}/patient/getAllPatients`;
     axios.get(url).then((res) => {
@@ -36,6 +54,11 @@ let serialNo=1
       navigate("/error");
   });
   };
+  //toggle data change flag
+  const ToggleDataChangeFlag = () => {
+    console.log("datachange flag addnew : " + dataChangedFlag);
+    setDataChangedFlag(true);
+  };
   useEffect(() => {
     getPatientsFromServer();
     console.log("inside useEffect of adminDetails");
@@ -43,37 +66,46 @@ let serialNo=1
   const navigate = useNavigate();
   //******************=-------------=======----------=======------------- */
   return (
-    <div className="doctorContainer" >
-       <Navbar bg="" expand="lg" sticky="top" style={{marginLeft:'70%'}}>
+    <div className="" >
+      <Navbar bg="" expand="lg" sticky="top" className="custom-navbar">
         <Container>
           <Navbar.Toggle
             aria-controls="basic-navbar-nav"
+            className="navbar-toggle"
             style={{ color: "brown", fontWeight: "bold",background:"chartreuse" }}
           >
             Click For Options
           </Navbar.Toggle>
-          
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              {/* ==============================ato log out==================== */}
-              <Nav.Link >
+            <Nav className="me-auto" >
+              {/* ==============================add new patient==================== */}
+              <Nav.Link style={{marginLeft:'10%'}}>
+                <Button onClick={ToggleAddNewPatientModal} variant="success"
+                 style={{width:'200%'}}>
+                  Add New Patient
+                </Button>
+              </Nav.Link>
+              <Nav.Link style={{marginLeft:'150%'}}>
+              
                   <input
                     style={{
+                      
                       borderStyle: "solid",
                       borderRadius: "20px",
                       marginLeft: "10px",
-                      textAlign: 'center'
+                     
 
                     }}
-                    placeholder="  Search by Name.. "
+                    placeholder="  Search by Name.."
                     onChange={e=>{
                       setSearch(e.target.value)
                     }}
                     type="text"
                   />
               </Nav.Link>
+              
               <Nav.Link>
-                {/* fourth menu operation */}
+                {/* fourth menu operration */}
                 <Button
                   variant="danger"
                   onClick={() => {
@@ -82,20 +114,31 @@ let serialNo=1
                 >
                   Logout
                 </Button>
+                
+               
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      
+      <div>
+        {addNewPatientModalFlag && (
+          <AddNewPatientModal
+            ToggleDataChangeFlag={ToggleDataChangeFlag}
+            setAddNewPatientModalFlag={setAddNewPatientModalFlag}
+            handleClose={handleClose}
+            show={show}
+          />
+        )}
+      </div>
 
-     
+      <hr />
       {/* =======================================table container of patients====================================== */}
-      <div className="container-fluid">
-        <table className="table table-hover patient-table">
+      <div className="container-fluid receptionTableContainer">
+        <table className="table table-hover">
           <thead>
-            <tr className="table-heading">
-              <th scope="col">Sr.No.</th>
+            <tr>
+              <th scope="col">Patient Id</th>
               <th scope="col">Name</th>
               <th scope="col">Payment Status</th>
               <th scope="col">Details</th>
@@ -108,9 +151,10 @@ let serialNo=1
                else
                if((`${e.firstName}+" "+${e.lastName}`).toLocaleLowerCase().includes(search.toLocaleLowerCase()) )
                return e;
+
             }).map((e) => {
               return (
-                <PatientAccountant key={e.patId} serialNo={serialNo++} patient={e} setDataChangedFlag={setDataChangedFlag} />
+                <Patient patient={e} setDataChangedFlag={setDataChangedFlag} />
               );
             })}
           </tbody>
@@ -121,4 +165,4 @@ let serialNo=1
   );
 };
 
-export default Accountant;
+export default ReceptionistHome;

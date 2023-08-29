@@ -29,7 +29,7 @@ const RemoveMedicineModal = (props) => {
   const GetAllMedicinesFromServer = () => {
     setDataChangeFlagRemoveMedicine(false)
     const url = `${URL}/medicine/getAllMedicines`;
-    axios.delete(url).then((res) => {
+    axios.get(url).then((res) => {
       const result = res.data;
       if (result.status == "success") {
         setMedicines(result.data);
@@ -47,6 +47,7 @@ const RemoveMedicineModal = (props) => {
   };
   useEffect(() => {
     GetAllMedicinesFromServer();
+    setDataChangeFlagRemoveMedicine(false)
   }, [dataChangeFlagRemoveMedicine]);
   /**==================================================================== */
   return (
@@ -66,10 +67,11 @@ const RemoveMedicineModal = (props) => {
             <tr>
               <th>Medicine Name</th>
               <th>Price</th>
+              <th></th>
             </tr>
             {medicines.map((medicine) => {
               return (
-                <MedicineAdminDetails  medicine={medicine} togleDataFlag={togleDataFlag} />
+                <MedicineAdminDetails  medicine={medicine} setDataChangeFlagRemoveMedicine={setDataChangeFlagRemoveMedicine} />
               );
             })}
           </table>

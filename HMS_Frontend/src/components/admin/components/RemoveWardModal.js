@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
+import { toast } from "react-toastify";
 import { Modal, Button } from "react-bootstrap";
 import 'react-phone-number-input/style.css'
 import axios from "axios";
@@ -34,12 +35,35 @@ const RemoveWardModal = (props) => {
   };
 
   
-  const togleDataFlag=()=>{
+  const toggleDataFlag=()=>{
     setDataChangeFlagRemoveWard(true);
   }
+  const removeWard = (id) => {
+    const url = `${URL}/ward/removeWard/${id}`;
+    axios
+      .delete(url)
+      .then((res) => {
+        const result = res.data;
+        console.log(result);
+        if (result.status == "success") {
+          if(result.data == "WARD_REMOVED")
+          toast.success("ward removed success");
+          else 
+          toast.warning("ward not removed");
+        } else {
+          toast.warning("ward not removed");
+        }
+        setDataChangeFlagRemoveWard(true)
+      })
+      .catch((err) => {
+        navigate("/error");
+      });
+    toggleDataFlag();
+  };
   useEffect(() => {
     
     GetWardsFromServer();
+    setDataChangeFlagRemoveWard(false)
   }, [dataChangeFlagRemoveWard]);
   /**==================================================================== */
   return (
@@ -60,11 +84,11 @@ const RemoveWardModal = (props) => {
         <Modal.Body>
            <table className="table" style={{textAlign:"center"}}>
              <tr>
-               <th>Ward-Type</th><th>Ward-max-Capacity</th>
+               <th>Ward-Type</th><th>Ward-max-Capacity</th><th></th>
              </tr>
              {
                wards.map((ward)=>{
-                 return (<WardAdminDetails   ward={ward} togleDataFlag={togleDataFlag}/>)
+                 return (<WardAdminDetails   ward={ward} removeWard={removeWard}/>)
                })
              }
            </table>
