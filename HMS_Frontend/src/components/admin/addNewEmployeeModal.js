@@ -17,10 +17,7 @@ const AddNewEmployeeModal = (props) => {
   /***********============================================================= */
   const {
     show,
-    employees,
-    setShow,
     handleClose,
-    handleShow,
     setEmployeeModal,
     dataChangedFlag,
     setDataChangedFlag,
@@ -57,7 +54,7 @@ const AddNewEmployeeModal = (props) => {
     axios.post(url, body).then((res) => {
       const result = res.data;
       console.log(result);
-      if (result.status == "success") {
+      if (result.status === "success") {
         setUniqueEmail(result.data);
       }
     }).catch(err => {
@@ -72,13 +69,13 @@ const AddNewEmployeeModal = (props) => {
       lastName.length > 2 &&
       email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) &&
       password.length > 2 &&
-      hireDate != "" &&
-      cellNo != "+91 0000000000" &&
-      securityQuestion != "select security question" &&
-      securityAnswer != "" &&
-      salary != 0 &&
-      uniqueEmail == "UNIQUE_EMAIL" &&
-      role != "select role"
+      hireDate !== "" &&
+      cellNo !== "+91 0000000000" &&
+      securityQuestion !== "select security question" &&
+      securityAnswer !== "" &&
+      salary !== 0 &&
+      uniqueEmail === "UNIQUE_EMAIL" &&
+      role !== "select role"
     ) {
       const url = `${URL}/employee/addEmployee`;
       const body = {
@@ -99,7 +96,7 @@ const AddNewEmployeeModal = (props) => {
       setDataChangedFlag(true);
       console.log("data flag inside add new employee " + dataChangedFlag);
       axios.post(url, body).then((res) => {
-        const result = res.data;
+        
 
       }).catch(err => {
 
@@ -186,7 +183,7 @@ const AddNewEmployeeModal = (props) => {
             )}
             {/* ======================checking if email is unique==== */}
 
-            {uniqueEmail == "DUPLICATE_EMAIL" &&
+            {uniqueEmail === "DUPLICATE_EMAIL" &&
               email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) ? (
               <div>
                 <MdUnpublished style={{ color: "red" }} />{" "}
@@ -195,7 +192,7 @@ const AddNewEmployeeModal = (props) => {
             ) : (
               <div></div>
             )}
-            {uniqueEmail == "UNIQUE_EMAIL" &&
+            {uniqueEmail === "UNIQUE_EMAIL" &&
               email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) && email.endsWith(".com") ? (
               <div>
                 <MdTaskAlt style={{ color: "green" }} />
@@ -321,7 +318,7 @@ const AddNewEmployeeModal = (props) => {
               className="form-control"
             />
             {/* hire date validation */}
-            {hireDate == "" ? (
+            {hireDate === "" ? (
               <h6 className="emptyFieldWarning">*hire date cannot be empty</h6>
             ) : (
               <div></div>

@@ -1,11 +1,11 @@
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router";
 const PatientDoctor = (props) => {
-  const { patient, handleShow,setDataChangedFlag } = props;
+  const { patient, serialNo } = props;
   const navigate=useNavigate();
   return (
     <tr>
-      <td>{patient.patId}</td>
+      <td>{serialNo}</td>
       <td>{patient.firstName + " " + patient.lastName}</td>
       <td>{patient.paymentStatus}</td>
       <td>

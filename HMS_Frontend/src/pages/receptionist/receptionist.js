@@ -15,6 +15,7 @@ import { URL } from "../../config";
 import { useNavigate } from "react-router";
 
 const ReceptionistHome = () => {
+  let serialNo=1
   // ============================all constants=======================
   const [addNewPatientModalFlag, setAddNewPatientModalFlag] = useState(false);
   const [show, setShow] = useState(false);
@@ -123,7 +124,7 @@ const ReceptionistHome = () => {
       </Navbar>
       <div>
         {addNewPatientModalFlag && (
-          <AddNewPatientModal
+          <AddNewPatientModal 
             ToggleDataChangeFlag={ToggleDataChangeFlag}
             setAddNewPatientModalFlag={setAddNewPatientModalFlag}
             handleClose={handleClose}
@@ -138,7 +139,7 @@ const ReceptionistHome = () => {
         <table className="table table-hover">
           <thead>
             <tr>
-              <th scope="col">Patient Id</th>
+              <th scope="col">Patient No</th>
               <th scope="col">Name</th>
               <th scope="col">Payment Status</th>
               <th scope="col">Details</th>
@@ -154,7 +155,7 @@ const ReceptionistHome = () => {
 
             }).map((e) => {
               return (
-                <Patient patient={e} setDataChangedFlag={setDataChangedFlag} />
+                <Patient serialNo={serialNo++} patient={e} setDataChangedFlag={setDataChangedFlag} />
               );
             })}
           </tbody>

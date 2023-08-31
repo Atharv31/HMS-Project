@@ -68,9 +68,7 @@ const RemoveWardModal = (props) => {
   /**==================================================================== */
   return (
     <div className="">
-      {/* <Button variant="primary" onClick={handleShow}>
-      Launch static backdrop modal
-    </Button> */}
+      
 
       <Modal
         show={show}
@@ -88,7 +86,7 @@ const RemoveWardModal = (props) => {
              </tr>
              {
                wards.map((ward)=>{
-                 return (<WardAdminDetails   ward={ward} removeWard={removeWard}/>)
+                 return (<WardAdminDetails  key={ward.wardId} ward={ward} removeWard={removeWard}/>)
                })
              }
            </table>

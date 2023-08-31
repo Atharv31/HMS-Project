@@ -46,6 +46,8 @@ function AddNewPatientModal(props) {
   const [wardId, setWardId] = useState(0);
   const [wards, setWards] = useState([]);
   const [wardFullFlag, setWardFullFlag] = useState(false);
+
+
   //========================functions=================================
   const navigate = useNavigate();
   //set token from session storage
@@ -56,51 +58,6 @@ function AddNewPatientModal(props) {
     setAddNewPatientModalFlag(false);
   };
 
-  // decrease bed count
-  const DecreaseBedCount = () => {
-    if (wardId != 0) {
-      console.log("ward---id- inside decrease->" + wardId);
-      const body = {
-        wardId,
-      };
-      const url = `${URL}/ward/decreaseBedCount`;
-      axios.post(url, body).then((res) => {
-        const result = res.data; //DECREASED
-        console.log(result); //INCREASED
-        if (result.status === "success" && result.data === "FAILED") {
-          setWardFullFlag(true);
-          toast.warning(" ward full!!!");
-        } else {
-          toast.success("bed available in ward");
-        }
-      }).catch(err=>{
-        navigate("/error");
-    });
-    } else {
-      toast.warning("set ward type first");
-    }
-  };
-  //increase bed count
-  const IncreaseBedCount = () => {
-    if (wardId != 0) {
-      console.log("ward--increse-id-->" + wardId);
-      const body = {
-        wardId,
-      };
-      const url = `${URL}/ward/increaseBedCount`;
-      axios.post(url, body).then((res) => {
-        const result = res.data; //DECREASED
-        console.log(result); //INCREASED
-        if (result.status === "success" && result.data === "FAILED") {
-          setWardFullFlag(true);
-        } else {
-        }
-      }).catch(err=>{
-        navigate("/error");
-    });
-    } else {
-    }
-  };
   //==========================function to save data on server============
   const addPatient = () => {
     if (
@@ -146,12 +103,9 @@ function AddNewPatientModal(props) {
 
       axios.post(url, body).then((res) => {
         const result=res.data;
-        if (result.status === "exception") {
+        if (result.status == "exception") {
           toast.warning(result.data);
-        } else {
-          toast.success("bed alloted successfull ");
-        }
-        
+        } 
         console.log(result);
 
       }).catch(err=>{
@@ -165,10 +119,10 @@ function AddNewPatientModal(props) {
       axios.post(urlDecrease, bodyDecreseBed).then((res) => {
         const result = res.data; //DECREASED
         console.log(result); //INCREASED
-        if (result.status === "success" && result.data === "FAILED") {
+        if (result.status == "success" && result.data == "FAILED") {
           toast.warning(" bed not alloted !!!");
         } else {
-          toast.success("bed alloted successfull ");
+          toast.success("bed alloted successfully ");
         }
       }).catch(err=>{
         navigate("/error");
@@ -180,6 +134,7 @@ function AddNewPatientModal(props) {
       setAddNewPatientModalFlag(false);
       setWardFullFlag(false);
     } else {
+      
     }
   }; //end of if
 
@@ -190,7 +145,7 @@ function AddNewPatientModal(props) {
     axios.get(url).then((res) => {
       const result = res.data;
       console.log(result);
-      if (result.status === "success") setDoctors(result.data);
+      if (result.status == "success") setDoctors(result.data);
     }).catch(err=>{
       navigate("/error");
   });
@@ -200,7 +155,7 @@ function AddNewPatientModal(props) {
     axios.get(url).then((res) => {
       const result = res.data;
       console.log(result);
-      if (result.status === "success") setWards(result.data);
+      if (result.status == "success") setWards(result.data);
     }).catch(err=>{
       navigate("/error");
   });
@@ -222,7 +177,7 @@ function AddNewPatientModal(props) {
     axios.post(url, body).then((res) => {
       const result = res.data;
       console.log(result);
-      if (result.status === "success") {
+      if (result.status == "success") {
         setUniqueEmail(result.data);
       }
     }).catch(err=>{
@@ -239,7 +194,8 @@ function AddNewPatientModal(props) {
     axios.post(url, body).then((res) => {
       const result = res.data;
       console.log(result);
-      if (result.status === "success") {
+      if (result.status == "success") {
+        
         setUniqueBedAlloted(result.data);
       }
     }).catch(err=>{
@@ -421,11 +377,7 @@ function AddNewPatientModal(props) {
           </div>
           {/* ==================================doctorAlloted=========================== */}
           <div style={{ marginTop: "15px" }}>
-            {doctorId == 0 ? (
-              <h6 style={{ color: "red" }}>*please select doctor</h6>
-            ) : (
-              <div></div>
-            )}
+            
             <DropdownButton size="sm" title={doctorName} variant="warning">
               {doctors.map((doctor) => {
                 return (
@@ -436,17 +388,16 @@ function AddNewPatientModal(props) {
                 );
               })}
             </DropdownButton>
+            {doctorId == 0 ? (
+              <h6 style={{ color: "red" }}>*please select doctor</h6>
+            ) : (
+              <div></div>
+            )}
           </div>
 
           {/* ====================================blood group and ward type================= */}
           <div style={{ marginTop: "15px" }}>
-            {bloodGroup == "select Blood group" ? (
-              <h6 className="emptyFieldWarning">
-                *blood group cannot be empty
-              </h6>
-            ) : (
-              <div></div>
-            )}
+            
             <DropdownButton size="sm" title={bloodGroup} variant="warning">
               <Dropdown.Item as="Button">
                 <div
@@ -503,14 +454,15 @@ function AddNewPatientModal(props) {
                 </div>
               </Dropdown.Item>
             </DropdownButton>
-          </div>
-          {/*----------------------------------- ward type-------------------  */}
-          <div style={{ marginTop: "15px" }}>
-            {type == "select ward type" ? (
-              <h6 className="emptyFieldWarning">*ward cannot be empty</h6>
+            {bloodGroup == "select Blood group" ? (
+              <h6 className="emptyFieldWarning">
+                *blood group cannot be empty
+              </h6>
             ) : (
               <div></div>
             )}
+          </div>
+          <div style={{ marginTop: "15px" }}>
             <DropdownButton size="sm" title={type} variant="warning">
               {wards.map((ward) => {
                 return (
@@ -522,18 +474,22 @@ function AddNewPatientModal(props) {
                 );
               })}
             </DropdownButton>
+            {/*----------------------------------- ward type-------------------  */}
+          
+            {type == "select ward type" ? (
+              <h6 className="emptyFieldWarning">*ward cannot be empty</h6>
+            ) : (
+              <div></div>
+            )}
           </div>
           {/* ===============================bed alloted==================== */}
           {/* <div>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,</div> */}
           <div>
             <label className="form-label">Bed alloted</label>
             <input
-              onDrop={DecreaseBedCount}
+            
               onBlur={() => {
                 CheckForBedDupicacyOnServer();
-                if (wardFullFlag == false) {
-                  IncreaseBedCount();
-                }
               }}
               onChange={(e) => {
                 CheckForBedDupicacyOnServer();
@@ -543,49 +499,37 @@ function AddNewPatientModal(props) {
               className="form-control"
               placeholder="enter bed no"
             />
-
             
-            {wardFullFlag ? (
-              <div style={{ color: "red" }}>*ward is full</div>
-            ) : (
-              <div></div>
-            )}
-            {bedAlloted === 0 ? (
+            {type ==="select ward type" ?<h6 className="emptyFieldWarning">
+                *please select Ward First
+              </h6>:
+            bedAlloted == 0 ? (
               <h6 className="emptyFieldWarning">
                 *bed alloted cannot be empty
               </h6>
-            ) : (
-              <div></div>
-            )}
-
-            {uniqueBedAlloted === "BED_AVAILABLE" && bedAlloted !== 0 ? (
+            ) : uniqueBedAlloted === "BED_AVAILABLE" && bedAlloted != 0 && type !== "select ward type" ? (
               <div>
                 <MdTaskAlt style={{ color: "green" }} />
                 <h6 style={{ color: "green" }}>available</h6>
               </div>
             ) : (
-              <div></div>
-            )}
-            {(uniqueBedAlloted === "BED_NOT_AVAILABLE" && bedAlloted !== 0) ||
-            wardFullFlag ? (
-              <div>
-                <MdUnpublished style={{ color: "red" }} />{" "}
-                <h6 style={{ color: "red" }}>not available</h6>
-              </div>
-            ) : (
-              <div></div>
-            )}
+              (bedAlloted != 0 && uniqueBedAlloted === "BED_NOT_AVAILABLE" ) || wardFullFlag? (
+                <div>
+                  <MdUnpublished style={{ color: "red" }} />{" "}
+                  <h6 style={{ color: "red" }}>not available</h6>
+                  
+                </div>
+              ) : (
+                <div></div>
+              ))
+            }
+            
+            
           </div>
 
           {/* ====================================security question================================= */}
           <div>
-            {securityQuestion === "select security question" ? (
-              <h6 className="emptyFieldWarning">
-                * security question cannot be empty
-              </h6>
-            ) : (
-              <div></div>
-            )}
+            
             <DropdownButton
               size="sm"
               title={securityQuestion}
@@ -602,6 +546,13 @@ function AddNewPatientModal(props) {
                 </div>
               </Dropdown.Item>
             </DropdownButton>
+            {securityQuestion == "select security question" ? (
+              <h6 className="emptyFieldWarning">
+                * security question cannot be empty
+              </h6>
+            ) : (
+              <div></div>
+            )}
           </div>
           {/* ========================================security answer============================================== */}
           <div>
@@ -615,7 +566,7 @@ function AddNewPatientModal(props) {
               placeholder="enter your pet name"
               required
             />
-            {securityAnswer === "" ? (
+            {securityAnswer == "" ? (
               <h6 className="emptyFieldWarning">*answer cannot be empty</h6>
             ) : (
               <div></div>

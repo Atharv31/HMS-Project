@@ -7,7 +7,7 @@ function WardDropdownElement(props) {
         <div>
              <Dropdown.Item as="Button">
                 <div
-                  onClick={(e) => {
+                  onClick={() => {
                     setWardFullFlag(false)
                     HandleWardDropdown(ward.wardId,ward.type);
                   }}
